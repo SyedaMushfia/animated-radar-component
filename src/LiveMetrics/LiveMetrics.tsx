@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { motion } from "framer-motion";
 
 import type { LiveMetricsProps, LiveMetricsTheme, RadarOptions } from "./types";
@@ -8,12 +8,10 @@ import { useIsMobile, useDynamicRadarSize } from "./hooks";
 import { RadarCanvas } from "./RadarCanvas";
 import { ConnectorLines } from "./ConnectorLines";
 import { SkeletonCard, DesktopCard, MobileCard } from "./Cards";
-import { FeedErrorBanner } from "./FeedErrorBanner";
 
 export default function LiveMetrics({
   metrics = DEFAULT_METRICS,        // Array of metric objects to display
   isLoading = false,                // Flag for showing loading skeletons
-  feedError = null,                 // Error object for feed issues (optional)
   radarSize = 280,                  // Base size of the radar in pixels
   mobileBreakpoint = 768,           // Width below which mobile layout is used
   cardMinWidth = 160,               // Minimum width for cards
@@ -29,17 +27,11 @@ export default function LiveMetrics({
   // Refs to all card DOM elements for drawing connector lines
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  // Tracks component visibility to trigger animations on mount
-  const [isVisible, setIsVisible] = useState(false);
-
   // Detect if current viewport is mobile
   const isMobile = useIsMobile(mobileBreakpoint);
 
   // Dynamically adjust radar size based on screen and props
   const dynamicRadarSize = useDynamicRadarSize(radarSize);
-
-  // Trigger visibility animation after component mounts
-  useEffect(() => { setIsVisible(true); }, []);
 
   // Shared props passed to all card components
   const sharedCardProps = { theme, cardMinWidth, hideLiveIndicator };
