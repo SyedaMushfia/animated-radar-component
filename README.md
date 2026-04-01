@@ -1,4 +1,4 @@
-# 🛰️ Animated Radar — Live Metrics Dashboard Component
+# Animated Radar — Live Metrics Dashboard Component
 
 ![Radar Animation](./demo.gif)
 
